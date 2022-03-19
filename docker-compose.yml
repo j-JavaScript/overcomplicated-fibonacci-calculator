@@ -1,5 +1,15 @@
 version: '3'
 services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
+    depends_on:
+      - api
+      - client
   postgres:
     image: 'postgres:latest'
     environment:
@@ -39,10 +49,3 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-  nginx:
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - '3050:80'
